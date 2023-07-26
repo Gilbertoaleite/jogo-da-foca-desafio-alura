@@ -10,7 +10,7 @@ function showMe() {
 		escondeJogo.style.display = 'none';
 	}
 }
-// -----------------funções Sonss--------------------------
+// -----------------funções Sons--------------------------
 
 function TocarMusicaInicio() {
 	var audio1 = new Audio();
@@ -51,7 +51,7 @@ function TocarMusicaVitoria() {
 
 //----------- função iniciar jogo ------------------
 
-let iniciaBotao = document.querySelector('#btn-cripto');
+let iniciaBotao = document.querySelector('#btn-iniciar');
 iniciaBotao.addEventListener('click', function (event) {
 	event.preventDefault();
 
@@ -419,6 +419,7 @@ function comparaListas(letra) {
 
 function carregaImagemForca() {
 	switch (tentativas) {
+		
 		case 5:
 			document.getElementById('imagem').style.background =
 				"url('img/forca01.png')";

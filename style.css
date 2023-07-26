@@ -72,7 +72,7 @@ body {
 	box-shadow: inset 0 0 20px #ffffff;
 }
 #imagem {
-	background-image: url('../jogo-forca/img/forca.png');
+	background-image: url('/img/forca.png');
 	width: 234px;
 	height: 272px;
 	background-repeat: no-repeat;
