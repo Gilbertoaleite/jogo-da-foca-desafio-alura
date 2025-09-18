@@ -1,3 +1,20 @@
+/* Botão de mute fixo no topo direito */
+.btn-mute {
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	z-index: 1000;
+	background: none;
+	border: none;
+	font-size: 2em;
+	cursor: pointer;
+	color: #00ff;
+	transition: color 0.2s, transform 0.2s;
+}
+.btn-mute:hover {
+	color: #0fffff;
+	transform: scale(1.15);
+}
 /** @format */
 
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Kaushan+Script&display=swap');
@@ -72,7 +89,7 @@ body {
 	box-shadow: inset 0 0 20px #ffffff;
 }
 #imagem {
-	background-image: url('/img/forca.png');
+	background-image: url('img/forca.png');
 	width: 234px;
 	height: 272px;
 	background-repeat: no-repeat;
@@ -102,7 +119,8 @@ body {
 	margin-top: 30px;
 }
 
-.teclas button {
+
+.teclas button, #btn-reinicia {
 	width: 24px;
 	height: 24px;
 	margin: 2px;
@@ -114,14 +132,31 @@ body {
 	color: #00ff;
 	font-weight: 900;
 	font-family: 'Architects Daughter', cursive;
+	background: #f3f3f3;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	transition: background 0.2s, transform 0.2s;
+	padding: 0;
 }
 
-.teclas button:disabled {
+#btn-reinicia svg {
+	width: 18px;
+	height: 18px;
+	stroke: #00ff;
+}
+
+
+.teclas button:disabled, #btn-reinicia:disabled {
 	cursor: not-allowed;
+	opacity: 0.5;
 }
 
-.teclas button:hover {
+
+.teclas button:hover, #btn-reinicia:hover {
 	transform: scale(1.3);
+	background: #e0f7fa;
 }
 
 #categoria {
@@ -132,21 +167,22 @@ body {
 	font-weight: bold;
 }
 
+
 @media (min-width: 321px) {
 	.btn {
 		width: 110px;
 		height: 45px;
 		font-size: 21px;
 	}
-	.teclas button {
+	.teclas button, #btn-reinicia {
 		width: 25px;
 		height: 25px;
 	}
-
 	#categoria {
 		font-size: 1.3em;
 	}
 }
+
 
 @media (min-width: 376px) {
 	.btn {
@@ -154,43 +190,38 @@ body {
 		height: 50px;
 		font-size: 24px;
 	}
-
-	.teclas button {
+	.teclas button, #btn-reinicia {
 		width: 30px;
 		height: 30px;
 	}
-
 	#palavra-secreta {
 		font-size: 1.3em;
 	}
-
 	.letras {
 		width: 18px;
 	}
-
 	#categoria {
 		font-size: 1.5em;
 	}
 }
 
+
 @media (min-width: 426px) {
-	.teclas button {
+	.teclas button, #btn-reinicia {
 		width: 36px;
 		height: 36px;
 	}
-
 	#palavra-secreta {
 		font-size: 1.5em;
 	}
-
 	.letras {
 		width: 20px;
 	}
-
 	#categoria {
 		font-size: 1.6em;
 	}
 }
+
 
 @media (min-width: 769px) {
 	.btn {
@@ -198,21 +229,17 @@ body {
 		height: 70px;
 		font-size: 30px;
 	}
-
-	.teclas button {
+	.teclas button, #btn-reinicia {
 		width: 68px;
 		height: 68px;
 		font-size: 2em;
 	}
-
 	#palavra-secreta {
 		font-size: 2.5em;
 	}
-
 	.letras {
 		width: 35px;
 	}
-
 	#categoria {
 		font-size: 2em;
 	}

@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">-
+<html lang="pt-BR">
 
 <head>
 
@@ -7,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Veja se você consegue descobrir a palavra secreta no jogo da forca">
-  <link type="image/ico" rel="icon" src="favicon.ico">
-  <link rel="shortcut icon" src="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -17,38 +18,26 @@
 
 <body>
 
-  <header class="conteudo-titulo">
 
+  <header class="conteudo-titulo">
     <h1 class="titulo">Desafio da Forca Alura </h1>
+    <button id="btn-mute" class="btn-mute" title="Mutar/Desmutar Áudio">
+      🔊
+    </button>
   </header>
 
   <div class="botao"></div>
   <input class="btn" type="submit" value="Iniciar!" id="btn-iniciar">
 
-  <!-- class="img-gif"> <iframe src="https://giphy.com/embed/xT5LMT5ctNhxOLMeMU" width=" 480" height="362" -->
-  <div class="img-gif"> <img src="/img/animacaoInicio.gif" width=" 480" height="362" frameBorder="0" class="giphy-embed"
-      allowFullScreen></img>
-    <!-- <p><a href="animacaoInicio.gif"></a></p> -->
-
+  <div class="img-gif">
+    <img class="imgur-embed-pub" src="img/animacaoInicio.gif" alt="desenho simpson enforcado">
   </div>
 
+
   <div id="hidden">
-
     <div class="container">
-
       <div id="imagem"></div>
-
-      <div id="palavra-secreta">
-
-        <!-- <div class = "letras">A</div>
-            <div class = "letras">B</div>     
-            <div class = "letras">C</div>
-            <div class = "letras">D</div>
-            <div class = "letras">E</div>
-            <div class = "letras">F</div> -->
-
-      </div>
-
+      <div id="palavra-secreta"></div>
       <div id="teclado">
         <div class="teclas">
           <button id="tecla-A" onclick="verificaLetraEscolhida('A')">A</button>
@@ -61,7 +50,6 @@
           <button id="tecla-H" onclick="verificaLetraEscolhida('H')">H</button>
           <button id="tecla-I" onclick="verificaLetraEscolhida('I')">I</button>
         </div>
-
         <div class="teclas">
           <button id="tecla-J" onclick="verificaLetraEscolhida('J')">J</button>
           <button id="tecla-K" onclick="verificaLetraEscolhida('K')">K</button>
@@ -73,7 +61,6 @@
           <button id="tecla-Q" onclick="verificaLetraEscolhida('Q')">Q</button>
           <button id="tecla-R" onclick="verificaLetraEscolhida('R')">R</button>
         </div>
-
         <div class="teclas">
           <button id="tecla-S" onclick="verificaLetraEscolhida('S')">S</button>
           <button id="tecla-T" onclick="verificaLetraEscolhida('T')">T</button>
@@ -83,15 +70,14 @@
           <button id="tecla-X" onclick="verificaLetraEscolhida('X')">X</button>
           <button id="tecla-Y" onclick="verificaLetraEscolhida('Y')">Y</button>
           <button id="tecla-Z" onclick="verificaLetraEscolhida('Z')">Z</button>
-          <button id="btn-reinicia" title="Reiniciar o jogo">🎮</button>
+          <button id="btn-reinicia" title="Reiniciar o jogo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: auto;"><path d="M1 4v6h6"/><path d="M3.51 9a9 9 0 1 1-2.13 5"/></svg>
+          </button>
         </div>
-
       </div>
       <div id="categoria"></div>
-
       <!--inicio modal-->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content" id="corpoModal">
             <div class="modal-header">
@@ -108,43 +94,60 @@
         </div>
       </div>
       <!--fim modal-->
-
     </div>
   </div>
 
-  </div>
 
   <footer>
     <div class="social">
       <p>
-        2022 &copy; - Desenvolvido por
+        2025 &copy; - Desenvolvido por
         <a href="https://gilbertoaleite-portfolio.netlify.app/" target="_blank">Gilberto A Leite</a>
       </p>
       <div>
-        <a href="https://cursos.alura.com.br/emprega-one/profile/gilbertoaleite" target="_blank"><img
-            src="img/alura.png" alt="Logo Alura" /></a>
-        <a href="https://github.com/gilbertoaleite/" target="_blank"><img src="img/social/github.png"
-            alt="Logo do GitHub" /></a>
-        <a href="https://www.linkedin.com/in/gilbertoaleite" target="_blank"><img src="img/social/linkedin.png"
-            alt="Logo do linkedin" /></a>
+        <a href="https://cursos.alura.com.br/emprega-one/profile/gilbertoaleite" target="_blank"><img src="img/alura.png" alt="Logo Alura" /></a>
+        <a href="https://github.com/gilbertoaleite/" target="_blank"><img src="img/social/github.png" alt="Logo do GitHub" /></a>
+        <a href="https://www.linkedin.com/in/gilbertoaleite" target="_blank"><img src="img/social/linkedin.png" alt="Logo do linkedin" /></a>
       </div>
-
     </div>
   </footer>
 
-  </div>
 
 
   <script src="tabuleiro.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  <script>
+    // Controle global de mute
+    // Estado do mute salvo no localStorage
+    let isMuted = localStorage.getItem('forcaMute') === 'true';
+    const btnMute = document.getElementById('btn-mute');
+    function updateMuteIcon() {
+      btnMute.textContent = isMuted ? '🔇' : '🔊';
+    }
+    btnMute.addEventListener('click', function() {
+      isMuted = !isMuted;
+      localStorage.setItem('forcaMute', isMuted);
+      updateMuteIcon();
+    });
+    updateMuteIcon();
+
+    // Monkey patch nas funções de áudio do tabuleiro.js
+    function setMuteOnAllAudio() {
+      document.querySelectorAll('audio').forEach(a => a.muted = isMuted);
+    }
+    // Intercepta criação de novos áudios
+    const _Audio = window.Audio;
+    window.Audio = function() {
+      const audio = new _Audio();
+      audio.muted = isMuted;
+      btnMute.addEventListener('click', () => { audio.muted = isMuted; });
+      return audio;
+    };
+    window.Audio.prototype = _Audio.prototype;
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 </body>
 

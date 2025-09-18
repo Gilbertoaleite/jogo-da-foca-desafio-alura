@@ -1,474 +1,330 @@
+
 /** @format */
 
-// função imagem inicial
+// Exibe ou esconde o jogo
 function showMe() {
-	var escondeJogo = document.getElementById('hidden');
-
-	if (escondeJogo.style.display == '' || escondeJogo.style.display == 'none') {
-		escondeJogo.style.display = 'block';
-	} else {
-		escondeJogo.style.display = 'none';
-	}
-}
-// -----------------funções Sons--------------------------
-
-function TocarMusicaInicio() {
-	var audio1 = new Audio();
-	audio1.src = 'sons/mario_inicio.mp3';
-	audio1.play();
-	audio1.loop = false;
+	const escondeJogo = document.getElementById('hidden');
+	escondeJogo.style.display = (escondeJogo.style.display === '' || escondeJogo.style.display === 'none') ? 'block' : 'none';
 }
 
-function TocarMusicaFim() {
-	var audio1 = new Audio();
-	audio1.src = 'sons/faustao_errou.mp3';
-	audio1.play();
-	audio1.loop = false;
+// Função genérica para tocar sons
+function tocarSom(src) {
+	const audio = new Audio(src);
+	audio.loop = false;
+	audio.play();
 }
 
-function TocarMusicaAcerto() {
-	var audio1 = new Audio();
-	audio1.src = 'sons/som_acerto.mp3';
-	audio1.play();
-	audio1.loop = false;
-}
-
-function TocarMusicaErro() {
-	var audio1 = new Audio();
-	audio1.src = 'sons/zapsplat_erro_tentativa.mp3';
-	audio1.play();
-	audio1.loop = false;
-}
-
-function TocarMusicaVitoria() {
-	var audio1 = new Audio();
-	audio1.src = 'sons/vitoria_sf.mp3';
-	audio1.play();
-	audio1.loop = false;
-}
+const TocarMusicaInicio = () => tocarSom('sons/mario_inicio.mp3');
+const TocarMusicaFim = () => tocarSom('sons/faustao_errou.mp3');
+const TocarMusicaAcerto = () => tocarSom('sons/som_acerto.mp3');
+const TocarMusicaErro = () => tocarSom('sons/zapsplat_erro_tentativa.mp3');
+const TocarMusicaVitoria = () => tocarSom('sons/vitoria_sf.mp3');
 
 //------------fim funções sons-----------------
 
 //----------- função iniciar jogo ------------------
 
-let iniciaBotao = document.querySelector('#btn-iniciar');
-iniciaBotao.addEventListener('click', function (event) {
+
+const iniciaBotao = document.querySelector('#btn-iniciar');
+iniciaBotao.addEventListener('click', (event) => {
 	event.preventDefault();
+	TocarMusicaInicio();
 
-	var tocaMusicaInicio = TocarMusicaInicio();
-
-	var escondeImagem = document.querySelector('.img-gif');
-
+	const escondeImagem = document.querySelector('.img-gif');
 	escondeImagem.classList.add('fadeOut');
 
-	setTimeout(function () {
-		escondeImagem.remove();
-	}, 1000);
-
+	setTimeout(() => escondeImagem.remove(), 1000);
 	iniciaBotao.classList.add('fadeOut');
 
-	setTimeout(function () {
-		let iniciaJogo = showMe();
-	}, 1000);
+	setTimeout(() => showMe(), 1000);
 });
+
 
 let tentativas = 6;
 let listaDinamica = [];
-let palavraSecretaCategoria;
-let palavraSecretaSorteada;
+let palavraSecretaCategoria = '';
+let palavraSecretaSorteada = '';
 
-// lista palavra Secreta Sorteada
 
+// Lista de palavras e categorias
 const palavras = [
-	(palavra001 = {
-		nome: 'ESPANHA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra002 = {
-		nome: 'ALEMANHA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra003 = {
-		nome: 'TAILANDIA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra004 = {
-		nome: 'PAQUISTAO',
-		categoria: 'PAÍSES',
-	}),
-	(palavra005 = {
-		nome: 'ISLANDIA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra006 = {
-		nome: 'CHILE',
-		categoria: 'PAÍSES',
-	}),
-	(palavra007 = {
-		nome: 'CANADA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra008 = {
-		nome: 'MARROCOS',
-		categoria: 'PAÍSES',
-	}),
-	(palavra009 = {
-		nome: 'BOTSWANA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra010 = {
-		nome: 'MALASIA',
-		categoria: 'PAÍSES',
-	}),
-	(palavra011 = {
-		nome: 'MACARRAO',
-		categoria: 'COMIDAS',
-	}),
-	(palavra012 = {
-		nome: 'FEIJOADA',
-		categoria: 'COMIDAS',
-	}),
-	(palavra013 = {
-		nome: 'VATAPA',
-		categoria: 'COMIDAS',
-	}),
-	(palavra014 = {
-		nome: 'SUSHI',
-		categoria: 'COMIDAS',
-	}),
-	(palavra015 = {
-		nome: 'CHURRASCO',
-		categoria: 'COMIDAS',
-	}),
-	(palavra016 = {
-		nome: 'PAELLA',
-		categoria: 'COMIDAS',
-	}),
-	(palavra017 = {
-		nome: 'MIOJO',
-		categoria: 'COMIDAS',
-	}),
-	(palavra018 = {
-		nome: 'CAMARAO',
-		categoria: 'COMIDAS',
-	}),
-	(palavra019 = {
-		nome: 'SORVETE',
-		categoria: 'COMIDAS',
-	}),
-	(palavra020 = {
-		nome: 'HAMBURGER',
-		categoria: 'COMIDAS',
-	}),
-	(palavra021 = {
-		nome: 'CACHORRO',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra022 = {
-		nome: 'LONTRA',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra023 = {
-		nome: 'PINGUIM',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra024 = {
-		nome: 'ZEBRA',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra025 = {
-		nome: 'TAMANDUA',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra026 = {
-		nome: 'ALPACA',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra027 = {
-		nome: 'BAIACU',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra028 = {
-		nome: 'BORBOLETA',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra029 = {
-		nome: 'CARANGUEJO',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra030 = {
-		nome: 'ORANGOTANGO',
-		categoria: 'ANIMAIS',
-	}),
-	(palavra031 = {
-		nome: 'PRATOS',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra032 = {
-		nome: 'ESPELHO',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra033 = {
-		nome: 'CADEIRA',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra034 = {
-		nome: 'ESTANTE',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra035 = {
-		nome: 'GELADEIRA',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra036 = {
-		nome: 'MAQUINA DE LAVAR',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra037 = {
-		nome: 'MICROONDAS',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra038 = {
-		nome: 'ARMARIO',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra039 = {
-		nome: 'PANELA',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra040 = {
-		nome: 'CHUVEIRO',
-		categoria: 'ITENS DE CASA',
-	}),
-	(palavra041 = {
-		nome: 'WOLFSBURG',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra042 = {
-		nome: 'NOVORIZONTINO',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra043 = {
-		nome: 'LEVANTE',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra044 = {
-		nome: 'ATALANTA',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra045 = {
-		nome: 'FEYENOORD',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra046 = {
-		nome: 'BENFICA',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra047 = {
-		nome: 'EVERTON',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra048 = {
-		nome: 'JUVENTUS',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra049 = {
-		nome: 'PORTUGUESA',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra050 = {
-		nome: 'FLAMENGO',
-		categoria: 'TIMES DE FUTEBOL',
-	}),
-	(palavra051 = {
-		nome: 'FERRARI',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra052 = {
-		nome: 'HYUNDAI',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra053 = {
-		nome: 'HONDA',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra054 = {
-		nome: 'MERCEDES',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra055 = {
-		nome: 'RENAULT',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra056 = {
-		nome: 'CHEVROLET',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra057 = {
-		nome: 'CITROEN',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra058 = {
-		nome: 'PEUGEOT',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra059 = {
-		nome: 'PORSCHE',
-		categoria: 'MARCAS DE CARROS',
-	}),
-	(palavra060 = {
-		nome: 'TOYOTA',
-		categoria: 'MARCAS DE CARROS',
-	}),
+	// ANIMAIS E INSETOS
+	{ nome: 'CACHORRO', categoria: 'ANIMAIS' },
+	{ nome: 'GATO', categoria: 'ANIMAIS' },
+	{ nome: 'CAVALO', categoria: 'ANIMAIS' },
+	{ nome: 'ELEFANTE', categoria: 'ANIMAIS' },
+	{ nome: 'LEAO', categoria: 'ANIMAIS' },
+	{ nome: 'TIGRE', categoria: 'ANIMAIS' },
+	{ nome: 'URSO', categoria: 'ANIMAIS' },
+	{ nome: 'COELHO', categoria: 'ANIMAIS' },
+	{ nome: 'MACACO', categoria: 'ANIMAIS' },
+	{ nome: 'GIRAFA', categoria: 'ANIMAIS' },
+	{ nome: 'PANDA', categoria: 'ANIMAIS' },
+	{ nome: 'PINGUIM', categoria: 'ANIMAIS' },
+	{ nome: 'TARTARUGA', categoria: 'ANIMAIS' },
+	{ nome: 'JACARE', categoria: 'ANIMAIS' },
+	{ nome: 'CROCODILO', categoria: 'ANIMAIS' },
+	{ nome: 'RAPOSA', categoria: 'ANIMAIS' },
+	{ nome: 'LOBO', categoria: 'ANIMAIS' },
+	{ nome: 'ONCA', categoria: 'ANIMAIS' },
+	{ nome: 'TAMANDUA', categoria: 'ANIMAIS' },
+	{ nome: 'CAPIVARA', categoria: 'ANIMAIS' },
+	{ nome: 'LONTRA', categoria: 'ANIMAIS' },
+	{ nome: 'BORBOLETA', categoria: 'INSETO' },
+	{ nome: 'ABELHA', categoria: 'INSETO' },
+	{ nome: 'FORMIGA', categoria: 'INSETO' },
+	{ nome: 'ARANHA', categoria: 'INSETO' },
+	{ nome: 'CAMELO', categoria: 'ANIMAIS' },
+	{ nome: 'DROMEDARIO', categoria: 'ANIMAIS' },
+	{ nome: 'PATO', categoria: 'ANIMAIS' },
+	{ nome: 'GANSO', categoria: 'ANIMAIS' },
+	{ nome: 'GALINHA', categoria: 'ANIMAIS' },
+	{ nome: 'GALO', categoria: 'ANIMAIS' },
+	{ nome: 'PAVAO', categoria: 'ANIMAIS' },
+	{ nome: 'PERU', categoria: 'ANIMAIS' },
+	{ nome: 'PORCO', categoria: 'ANIMAIS' },
+	{ nome: 'BOI', categoria: 'ANIMAIS' },
+	{ nome: 'VACA', categoria: 'ANIMAIS' },
+	{ nome: 'OVELHA', categoria: 'ANIMAIS' },
+	{ nome: 'CABRA', categoria: 'ANIMAIS' },
+	{ nome: 'JAGUATIRICA', categoria: 'ANIMAIS' },
+	{ nome: 'QUATI', categoria: 'ANIMAIS' },
+	// ITENS DE CASA
+	{ nome: 'PRATO', categoria: 'ITENS DE CASA' },
+	{ nome: 'ESPELHO', categoria: 'ITENS DE CASA' },
+	{ nome: 'CADEIRA', categoria: 'ITENS DE CASA' },
+	{ nome: 'ESTANTE', categoria: 'ITENS DE CASA' },
+	{ nome: 'GELADEIRA', categoria: 'ITENS DE CASA' },
+	{ nome: 'MAQUINA DE LAVAR', categoria: 'ITENS DE CASA' },
+	{ nome: 'MICROONDAS', categoria: 'ITENS DE CASA' },
+	{ nome: 'ARMARIO', categoria: 'ITENS DE CASA' },
+	{ nome: 'PANELA', categoria: 'ITENS DE CASA' },
+	{ nome: 'CHUVEIRO', categoria: 'ITENS DE CASA' },
+	// Novos objetos de casa
+	{ nome: 'SOFA', categoria: 'ITENS DE CASA' },
+	{ nome: 'MESA', categoria: 'ITENS DE CASA' },
+	{ nome: 'TAPETE', categoria: 'ITENS DE CASA' },
+	{ nome: 'CORTINA', categoria: 'ITENS DE CASA' },
+	{ nome: 'LUMINARIA', categoria: 'ITENS DE CASA' },
+	{ nome: 'VENTILADOR', categoria: 'ITENS DE CASA' },
+	{ nome: 'TELEVISAO', categoria: 'ITENS DE CASA' },
+	{ nome: 'QUADRO', categoria: 'ITENS DE CASA' },
+	{ nome: 'TRAVESSEIRO', categoria: 'ITENS DE CASA' },
+	{ nome: 'COBERTOR', categoria: 'ITENS DE CASA' },
+	{ nome: 'FRIGOBAR', categoria: 'ITENS DE CASA' },
+	{ nome: 'LIVRO', categoria: 'ITENS DE CASA' },
+	{ nome: 'ABAJUR', categoria: 'ITENS DE CASA' },
+	{ nome: 'PORTA', categoria: 'ITENS DE CASA' },
+	{ nome: 'JANELA', categoria: 'ITENS DE CASA' },
+	{ nome: 'ROUPA DE CAMA', categoria: 'ITENS DE CASA' },
+	{ nome: 'GUARDA ROUPA', categoria: 'ITENS DE CASA' },
+	{ nome: 'LIXEIRA', categoria: 'ITENS DE CASA' },
+	{ nome: 'ESCADA', categoria: 'ITENS DE CASA' },
+
+	{ nome: 'REAL MADRID', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'BARCELONA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'BENFICA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'JUVENTUS', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'PORTUGUESA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'FLAMENGO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'PALMEIRAS', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'CORINTHIANS', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'SAO PAULO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'SANTOS', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'VASCO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'BOTAFOGO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'FLUMINENSE', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'GREMIO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'INTERNACIONAL', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'CRUZEIRO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'ATLETICO MINEIRO', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'ATHLETICO PARANAENSE', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'FORTALEZA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'CEARA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'SPORT', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'BAHIA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'GOIAS', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'CORITIBA', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'AVAI', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'FIGUEIRENSE', categoria: 'TIMES DE FUTEBOL' },
+	{ nome: 'FERRARI', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'HYUNDAI', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'HONDA', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'MERCEDES', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'RENAULT', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'CHEVROLET', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'CITROEN', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'PEUGEOT', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'PORSCHE', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'TOYOTA', categoria: 'MARCAS DE CARROS' },
+	// Novas marcas de carros
+	{ nome: 'VOLKSWAGEN', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'FIAT', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'JEEP', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'KIA', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'NISSAN', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'FORD', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'AUDI', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'BMW', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'JAGUAR', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'LAND ROVER', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'SUBARU', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'MITSUBISHI', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'SUZUKI', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'CHERY', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'GEELY', categoria: 'MARCAS DE CARROS' },
+	{ nome: 'BYD', categoria: 'MARCAS DE CARROS' },
 ];
 
-// função sorteia palavara secreta
-criaPalavraSecreta();
-function criaPalavraSecreta() {
-	const palavraAleatoria = parseInt(Math.random() * palavras.length);
 
+// Sorteia palavra secreta
+function criaPalavraSecreta() {
+	const palavraAleatoria = Math.floor(Math.random() * palavras.length);
 	palavraSecretaSorteada = palavras[palavraAleatoria].nome;
 	palavraSecretaCategoria = palavras[palavraAleatoria].categoria;
 }
+
+criaPalavraSecreta();
 aparecePalavraNaTela();
+
 
 function aparecePalavraNaTela() {
 	const categoria = document.getElementById('categoria');
-	categoria.innerHTML = palavraSecretaCategoria;
+	categoria.textContent = palavraSecretaCategoria;
 
 	const palavraSorteada = document.getElementById('palavra-secreta');
 	palavraSorteada.innerHTML = '';
 
-	for (i = 0; i < palavraSecretaSorteada.length; i++) {
-		if (listaDinamica[i] == undefined) {
+	for (let i = 0; i < palavraSecretaSorteada.length; i++) {
+		if (!listaDinamica[i]) {
 			listaDinamica[i] = '&nbsp;';
-			palavraSorteada.innerHTML =
-				palavraSorteada.innerHTML +
-				"<div class = 'letras'>" +
-				listaDinamica[i] +
-				'</div>';
-		} else {
-			palavraSorteada.innerHTML =
-				palavraSorteada.innerHTML +
-				"<div class = 'letras'>" +
-				listaDinamica[i] +
-				'</div>';
 		}
+		palavraSorteada.innerHTML += `<div class='letras'>${listaDinamica[i]}</div>`;
 	}
 }
 
-function verificaLetraEscolhida(letra) {
-	document.getElementById('tecla-' + letra).disabled = true;
 
+function verificaLetraEscolhida(letra) {
+	const tecla = document.getElementById('tecla-' + letra);
+	if (tecla) tecla.disabled = true;
 	if (tentativas > 0) {
 		mudarCorTecla('tecla-' + letra);
 		comparaListas(letra);
 		aparecePalavraNaTela();
 	}
-	if (tentativas < 0) {
-		mudarCorTeclaErro('tecla-' + letra);
+}
+
+
+function mudarCorTecla(tecla, cor = 'green') {
+	const el = document.getElementById(tecla);
+	if (el) {
+		el.style.background = cor;
+		el.style.color = '#ffffff';
 	}
 }
 
-function mudarCorTecla(tecla) {
-	document.getElementById(tecla).style.background = 'green';
-	document.getElementById(tecla).style.color = '#ffffff';
+function mudarCorTeclaErro(tecla) {
+	mudarCorTecla(tecla, 'red');
 }
+
 
 function comparaListas(letra) {
-	const pos = palavraSecretaSorteada.indexOf(letra);
-
-	if (pos > 0) {
-		TocarMusicaAcerto();
+	let acerto = false;
+	for (let i = 0; i < palavraSecretaSorteada.length; i++) {
+		if (palavraSecretaSorteada[i] === letra) {
+			listaDinamica[i] = letra;
+			acerto = true;
+		}
 	}
 
-	if (pos < 0) {
+	if (acerto) {
+		TocarMusicaAcerto();
+	} else {
 		tentativas--;
 		TocarMusicaErro();
 		carregaImagemForca();
 	}
 
-	if (tentativas == 0) {
+	if (tentativas === 0) {
 		TocarMusicaFim();
-		abreModal(
-			'OPS!',
-			'Não foi dessa vez... A palavra secreta era <br>' +
-				palavraSecretaSorteada,
-		);
-	} else {
-		for (i = 0; i < palavraSecretaSorteada.length; i++) {
-			if (palavraSecretaSorteada[i] == letra) {
-				listaDinamica[i] = letra;
-			}
-		}
+		abreModal('OPS!', 'Não foi dessa vez... A palavra secreta era <br>' + palavraSecretaSorteada);
+		bloquearTeclasJogo();
+		return;
 	}
 
-	let vitoria = true;
-	for (i = 0; i < palavraSecretaSorteada.length; i++) {
-		if (palavraSecretaSorteada[i] != listaDinamica[i]) {
-			vitoria = false;
-		}
-	}
-
-	if (vitoria == true) {
+	const vitoria = palavraSecretaSorteada.split('').every((l, i) => l === listaDinamica[i]);
+	if (vitoria) {
 		abreModal('PARABÉNS!', 'Você venceu!');
 		TocarMusicaVitoria();
 		tentativas = 0;
+		bloquearTeclasJogo();
 	}
+
+// Bloqueia todas as teclas do jogo, exceto mute e reiniciar
+function bloquearTeclasJogo() {
+	for (let i = 65; i <= 90; i++) {
+		const tecla = document.getElementById('tecla-' + String.fromCharCode(i));
+		if (tecla) {
+			tecla.disabled = true;
+		}
+	}
+	// Não bloqueia o botão de reiniciar (btn-reinicia) nem o botão de mute (btn-mute)
+	// Se houver outros botões, adicione exceções aqui
 }
+}
+
+
 
 function carregaImagemForca() {
-	switch (tentativas) {
-		
-		case 5:
-			document.getElementById('imagem').style.background =
-				"url('img/forca01.png')";
-			break;
-
-		case 4:
-			document.getElementById('imagem').style.background =
-				"url('img/forca02.png')";
-			break;
-
-		case 3:
-			document.getElementById('imagem').style.background =
-				"url('img/forca03.png')";
-			break;
-
-		case 2:
-			document.getElementById('imagem').style.background =
-				"url('img/forca04.png')";
-			break;
-
-		case 1:
-			document.getElementById('imagem').style.background =
-				"url('img/forca05.png')";
-			break;
-
-		case 0:
-			document.getElementById('imagem').style.background =
-				"url('img/forca06.png')";
-			break;
-		default:
-			document.getElementById('imagem').style.background =
-				"url('img/forca.png')";
-			break;
-	}
+	const imagens = [
+		'img/forca.png',      // 6 tentativas (inicial)
+		'img/forca01.png',    // 5 tentativas
+		'img/forca02.png',    // 4 tentativas
+		'img/forca03.png',    // 3 tentativas
+		'img/forca04.png',    // 2 tentativas
+		'img/forca05.png',    // 1 tentativa
+		'img/forca06.png',    // 0 tentativas (enforcado)
+	];
+	let idx = 6 - tentativas;
+	if (tentativas >= 6) idx = 0;
+	if (tentativas <= 0) idx = 6;
+	document.getElementById('imagem').style.backgroundImage = `url('${imagens[idx]}')`;
 }
 
+
 function abreModal(titulo, mensagem) {
-	let modalTitulo = document.getElementById('exampleModalLabel');
-	modalTitulo.innerText = titulo;
+	document.getElementById('exampleModalLabel').innerText = titulo;
+	document.getElementById('modal-body').innerHTML = mensagem;
+	$('#myModal').modal({ show: true });
 
-	let modalCorpo = document.getElementById('modal-body');
-	modalCorpo.innerHTML = mensagem;
-
-	$('#myModal').modal({
-		show: true,
+	// Reinicia o jogo ao fechar a modal (clicar em OK)
+	$('#myModal').off('hidden.bs.modal').on('hidden.bs.modal', function () {
+		document.getElementById('btn-reinicia').click();
 	});
 }
 
-let reiniciaBotao = document.getElementById('btn-reinicia');
-reiniciaBotao.addEventListener('click', function () {
-	location.reload();
+
+
+const reiniciaBotao = document.getElementById('btn-reinicia');
+reiniciaBotao.addEventListener('click', () => {
+	tentativas = 6;
+	listaDinamica = [];
+	criaPalavraSecreta();
+	aparecePalavraNaTela();
+	carregaImagemForca();
+
+	// Habilitar todas as teclas
+	for (let i = 65; i <= 90; i++) {
+		const tecla = document.getElementById('tecla-' + String.fromCharCode(i));
+		if (tecla) {
+			tecla.disabled = false;
+			tecla.style.background = '';
+			tecla.style.color = '';
+		}
+	}
+
+	// Fechar modal se estiver aberto
+	if (typeof $ !== 'undefined' && $('#myModal').hasClass('show')) {
+		$('#myModal').modal('hide');
+	}
 });
