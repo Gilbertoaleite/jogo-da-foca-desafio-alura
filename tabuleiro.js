@@ -260,17 +260,17 @@ function comparaListas(letra) {
 		bloquearTeclasJogo();
 	}
 
-// Bloqueia todas as teclas do jogo, exceto mute e reiniciar
-function bloquearTeclasJogo() {
-	for (let i = 65; i <= 90; i++) {
-		const tecla = document.getElementById('tecla-' + String.fromCharCode(i));
-		if (tecla) {
-			tecla.disabled = true;
+	// Bloqueia todas as teclas do jogo, exceto mute e reiniciar
+	function bloquearTeclasJogo() {
+		for (let i = 65; i <= 90; i++) {
+			const tecla = document.getElementById('tecla-' + String.fromCharCode(i));
+			if (tecla) {
+				tecla.disabled = true;
+			}
 		}
+		// Não bloqueia o botão de reiniciar (btn-reinicia) nem o botão de mute (btn-mute)
+		// Se houver outros botões, adicione exceções aqui
 	}
-	// Não bloqueia o botão de reiniciar (btn-reinicia) nem o botão de mute (btn-mute)
-	// Se houver outros botões, adicione exceções aqui
-}
 }
 
 
